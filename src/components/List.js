@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleTodo } from '../redux/actions/todoAction';
 
 function List() {
-  const todos = useSelector((state) => state.todos);
+  const todos = useSelector((state) => state.todos.todos);
   const dispatch = useDispatch();
   // console.log(todos);
   return (
