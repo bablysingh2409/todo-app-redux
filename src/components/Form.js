@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTodo } from '../redux/actions/todoAction';
+// import { addTodo } from '../redux/actions/todoAction';
+import { actions } from '../redux/reducers/todoReducer';
 
 function Form() {
   const [text, setText] = useState('');
@@ -10,7 +11,7 @@ function Form() {
     e.preventDefault();
     // createTodo(text);
     setText('');
-    dispatch(addTodo(text));
+    dispatch(actions.add(text));
   };
 
   return (

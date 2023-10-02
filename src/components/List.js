@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import { useDispatch } from 'react-redux';
-import { toggleTodo } from '../redux/actions/todoAction';
+// import { toggleTodo } from '../redux/actions/todoAction';
+import { actions } from '../redux/reducers/todoReducer';
+import { todoSelector } from '../redux/reducers/todoReducer';
 
 function List() {
-  const todos = useSelector((state) => state.todos.todos);
+  const todos = useSelector(todoSelector);
   const dispatch = useDispatch();
   // console.log(todos);
   return (
@@ -21,7 +23,7 @@ function List() {
             </span>
             <button
               onClick={() => {
-                dispatch(toggleTodo(i));
+                dispatch(actions.toggle(i));
               }}
             >
               Toggle
