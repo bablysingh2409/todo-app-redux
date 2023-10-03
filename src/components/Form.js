@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { addTodo } from '../redux/actions/todoAction';
 import { actions } from '../redux/reducers/todoReducer';
-import { notificationSelector } from '../redux/reducers/notificationReducer';
+import { notificationSelector, resetNotification } from '../redux/reducers/notificationReducer';
 
 function Form() {
   const [text, setText] = useState('');
   const dispatch = useDispatch();
   const message = useSelector(notificationSelector);
+
+  useEffect(() => {
+    let interval;
+    if (message) {
+      interval = setTimeout(() => {
+        dispatch(resetNotification.reset());
+      }, 2000);
+    }
+
+    return () => clearTimeout(interval);
+  }, [message, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +30,7 @@ function Form() {
   return (
     <div className="form-container">
       {message && (
-        <div class="alert alert-success" role="alert">
+        <div className="alert alert-success" role="alert">
           {message}
         </div>
       )}
