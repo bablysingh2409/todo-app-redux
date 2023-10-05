@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  todos: [{ text: 'hi this me', completed: false }],
+  todos: [],
 };
 
 //creating reducers using redux toolkit
@@ -10,7 +10,10 @@ const todoSlice = createSlice({
   name: 'todo',
   initialState: initialState,
   reducers: {
-    add: (state, action) => {
+    setInitialState: (state, action) => {
+      state.todos = [...action.payload];
+    },
+    addTodo: (state, action) => {
       state.todos.push({
         text: action.payload,
         completed: false,
@@ -29,7 +32,7 @@ const todoSlice = createSlice({
 });
 
 export const todoReducer = todoSlice.reducer;
-export const actions = todoSlice.actions;
+export const { addTodo, toggle, setInitialState } = todoSlice.actions;
 export const todoSelector = (state) => state.todoReducer.todos;
 
 // export function todoReducer(state = initialState, action) {
