@@ -1,9 +1,20 @@
 // import { TOGGLE_TODO, ADD_TODO } from '../actions/todoAction';
 import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+// import { actions } from './noteReducer';
 
 const initialState = {
   todos: [],
 };
+
+export const getInitialStateAsync = createAsyncThunk('todo/setInitialState', (arg, thunkAPI) => {
+  axios.get('http://localhost:4100/api/todos').then((res) => {
+    console.log(res.data);
+    // dispatch(setInitialState(res.data));
+    thunkAPI.dispatch(actions.setInitialState(res.data));
+  });
+});
 
 //creating reducers using redux toolkit
 const todoSlice = createSlice({
@@ -32,7 +43,7 @@ const todoSlice = createSlice({
 });
 
 export const todoReducer = todoSlice.reducer;
-export const { addTodo, toggle, setInitialState } = todoSlice.actions;
+export const actions = todoSlice.actions;
 export const todoSelector = (state) => state.todoReducer.todos;
 
 // export function todoReducer(state = initialState, action) {

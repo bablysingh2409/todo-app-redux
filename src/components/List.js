@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 // import { toggleTodo } from '../redux/actions/todoAction';
-import { toggle, setInitialState } from '../redux/reducers/todoReducer';
-import { todoSelector } from '../redux/reducers/todoReducer';
+import { todoSelector, getInitialStateAsync, actions } from '../redux/reducers/todoReducer';
+// import { todoSelector } from '../redux/reducers/todoReducer';
 import axios from 'axios';
 
 function List() {
@@ -15,10 +15,11 @@ function List() {
     // fetch('http://localhost:4100/api/todos')
     //   .then((res) => res.json())
     //   .then((parseJson) => console.log(parseJson));
-    axios.get('http://localhost:4100/api/todos').then((res) => {
-      console.log(res.data);
-      dispatch(setInitialState(res.data));
-    });
+    // axios.get('http://localhost:4100/api/todos').then((res) => {
+    //   console.log(res.data);
+    //   dispatch(setInitialState(res.data));
+    // });
+    dispatch(getInitialStateAsync());
   }, []);
 
   return (
@@ -35,7 +36,7 @@ function List() {
             </span>
             <button
               onClick={() => {
-                dispatch(toggle(i));
+                dispatch(actions.toggle(i));
               }}
             >
               Toggle
