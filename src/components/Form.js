@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { addTodo } from '../redux/actions/todoAction';
-import { actions } from '../redux/reducers/todoReducer';
+import { actions, addTodoAsync } from '../redux/reducers/todoReducer';
 import { notificationSelector, resetNotification } from '../redux/reducers/notificationReducer';
 
 function Form() {
   const [text, setText] = useState('');
   const dispatch = useDispatch();
   const message = useSelector(notificationSelector);
+  // console.log(message);
 
   useEffect(() => {
     let interval;
@@ -24,7 +25,8 @@ function Form() {
     e.preventDefault();
     // createTodo(text);
     setText('');
-    dispatch(actions.add(text));
+    dispatch(addTodoAsync(text));
+    // dispatch(actions.addTodo(text));
   };
 
   return (

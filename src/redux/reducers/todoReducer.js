@@ -8,7 +8,7 @@ const initialState = {
   todos: [],
 };
 
-export const getInitialStateAsync = createAsyncThunk(
+export const getInitialState = createAsyncThunk(
   'todo/setInitialState',
   //  (arg, thunkAPI) => {
   //   axios.get('http://localhost:4100/api/todos').then((res) => {
@@ -18,6 +18,24 @@ export const getInitialStateAsync = createAsyncThunk(
   //   });
   () => {
     return axios.get('http://localhost:4100/api/todos');
+  }
+);
+
+export const addTodoAsync = createAsyncThunk(
+  'todo/addTodo',
+
+  async (payload) => {
+    const res = await fetch('http://localhost:4100/api/todos', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: payload,
+        completed: false,
+      }),
+    });
+    return res.json();
   }
 );
 
@@ -46,9 +64,13 @@ const todoSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getInitialStateAsync.fulfilled, (state, action) => {
-      state.todos = [...action.payload.data];
-    });
+    builder
+      .addCase(getInitialState.fulfilled, (state, action) => {
+        state.todos = [...action.payload.data];
+      })
+      .addCase(addTodoAsync.fulfilled, (state, action) => {
+        state.todos.push(action.payload);
+      });
   },
 });
 
